@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th= "http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table border="1"> <!-- 기본 인라인이 text이므로 따로 표기해줄 필요없음 -->
+        <tr>
+            <td>MID</td>
+            <td>MNAME</td>
+            <td>REGDATE</td>
+        </tr>
+        <tr th:each="member : ${list}">
+            <!-- 더블 브라켓으로 인라인 적용. 굳이 th:text에 안넣어도 되니 좋다 -->
+            <td>[[${member.mid}]]</td>
+            <td>[[${member.mname}]]</td>
+            <td>[[${#dates.format(member.regdate, 'yyyy-MM-dd')}]]</td>
+        </tr>
+    </table>
+<script th:inline="javascript">
+    var result = /*[[${result}]]*/ 'default';
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/layout/layout1}">
+    <div layout:fragment="content">
+        <div class="card-header">View Page</div>
+        <div class="card-body">
+            <form>
+                <div class="form-group">
+                    <label>
+                        BNO
+                        <input class="form-control" name="bno" th:value="${vo.bno}" readonly="readonly"/>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        제목
+                        <input class="form-control" name="title" th:value="${vo.title}" readonly="readonly"/>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        내용
+                        <textarea class="form-control" name="content" rows="3" th:text="${vo.content}" readonly="readonly"></textarea>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        작성자
+                        <input class="form-control" name="writer" th:value="${vo.writer}" readonly="readonly"/>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        작성일
+                        <input class="form-control" name="regDate" th:value="${#dates.format(vo.regdate, 'yyyy-MM-dd')}" readonly="readonly">
+                    </label>
+                </div>
+
+                <div class="float-right">
+                    <a th:href="@{modify(page=${pageVO.page}, size=${pageVO.size}, type=${pageVO.type}, keyword=${pageVO.keyword}, bno=${vo.bno})}"
+                       class="btn btn-light">수정/삭제</a>
+
+                    <a th:href="@{list(page=${pageVO.page}, size=${pageVO.size}, type=${pageVO.type}, keyword=${pageVO.keyword})}"
+                       class="btn btn-primary">목록</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end fragment -->
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+
+            $(document).ready(function () {
+                $(window).on("load", function () {
+                    var msg = [[${msg}]];
+
+                    if (msg == "success") {
+                        alert("수정 성공!");
+                        var stateObj = { msg : "" };
+                    }
+                });
+            });
+
+        </script>
+    </th:block>
+</html>
