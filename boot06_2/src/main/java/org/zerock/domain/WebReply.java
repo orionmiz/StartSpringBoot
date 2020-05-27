@@ -1,5 +1,6 @@
 package org.zerock.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,24 +10,22 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name="tbl_webboards")
-@EqualsAndHashCode(of="bno")
-@ToString
-public class WebBoard {
+@Table(name="tbl_webreplies")
+@EqualsAndHashCode(of="rno")
+@ToString(exclude = "board")
+public class WebReply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bno;
+    private Long rno;
 
-    private String title;
+    private String replyText;
 
-    private String writer;
-    private String content;
+    private String replyer;
 
     @CreationTimestamp
     private Timestamp regdate;
@@ -34,6 +33,7 @@ public class WebBoard {
     @UpdateTimestamp
     private Timestamp updatedate;
 
-    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
-    private List<WebReply> replies;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private WebBoard board;
 }
