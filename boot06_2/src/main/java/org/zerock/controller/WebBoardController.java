@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.WebBoard;
+import org.zerock.persistence.CustomCrudRepository;
 import org.zerock.persistence.WebBoardRepository;
 import org.zerock.vo.PageMaker;
 import org.zerock.vo.PageVO;
@@ -22,7 +23,8 @@ import org.zerock.vo.PageVO;
 public class WebBoardController {
 
     @Autowired
-    WebBoardRepository repo;
+    /* WebBoardRepository repo; */
+    CustomCrudRepository repo;
 
     @GetMapping("/list")
     public void list(/*@PageableDefault(direction=Sort.Direction.DESC, sort="bno", size=10, page=0) Pageable page*/
@@ -31,7 +33,7 @@ public class WebBoardController {
 
         Pageable page = vo.makePageable(0, "bno");
 
-        Page<WebBoard> result = repo.findAll(repo.makePredicate(vo.getType(), vo.getKeyword()), page);
+        Page<Object[]> result = repo.getCustomPage(vo.getType(), vo.getKeyword(), page);
 
         log.info("" + page);
         log.info("" + result);
