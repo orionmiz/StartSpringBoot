@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <title>Thymeleaf3</title>
+</head>
+<body>
+
+<h2>CUSTOM LOGIN PAGE</h2>
+
+<div th:if="${param.error}">
+    <h2>Invalid Username or password</h2>
+    <h2 th:value="${param.error}"></h2>
+</div>
+
+<div th:if="${param.logout}">
+    <h2>You have been logged out.</h2>
+</div>
+
+<form method="post" th:action="@{/login}">
+    <div>
+        <label>Username : <input type="text" name="username"/></label>
+    </div>
+    <div>
+        <label>Password : <input type="password" name="password"/></label>
+    </div>
+    <p>
+        <label for="remember-me">Remember me</label>
+        <input type="checkbox" id="remember-me" name="remember-me"/>
+    </p>
+    <div>
+        <button type="submit">Log-in</button>
+    </div>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" http-equiv="Content-Type" content="text/html">
+    <title>Title</title>
+</head>
+<body>
+
+<form method="post">
+    <p>
+        <label for="uid">UID</label>
+        <input type="text" id="uid" name="uid" value="newbie"/>
+    </p>
+    <p>
+        <label for="upw">UPW</label>
+        <input type="text" id="upw" name="upw" value="newbie"/>
+    </p>
+    <p>
+        <label>
+            <input type="checkbox" name="roles[0].roleName" value="BASIC" checked>
+            BASIC
+        </label>
+        <label>
+            <input type="checkbox" name="roles[1].roleName" value="MANAGER" checked>
+            MANAGER
+        </label>
+        <label>
+            <input type="checkbox" name="roles[2].roleName" value="ADMIN" checked>
+            ADMIN
+        </label>
+    </p>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <button type="submit" class="btn">JOIN</button>
+</form>
+
+</body>
+</html>
