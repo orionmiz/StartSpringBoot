@@ -5,13 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.zerock.domain.Member;
 import org.zerock.domain.MemberRole;
 import org.zerock.persistence.MemberRepository;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -23,6 +27,9 @@ public class MemberTests {
 
     @Autowired
     private MemberRepository repo;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Test
     public void testInsert() {
@@ -53,6 +60,22 @@ public class MemberTests {
         result.ifPresent(member -> {
             log.info("member: " + member);
         });
+    }
+
+    @Test
+    public void updateOldPassword() {
+
+        List<String> ids = new ArrayList<>();
+
+        IntStream.range(0, 100).forEach(i -> {
+            ids.add("user" + i);
+        });
+
+        repo.findAllById(ids).forEach(member -> {
+            member.setUpw(encoder.encode(member.getUpw()));
+            repo.save(member);
+        });
+
     }
 
 }

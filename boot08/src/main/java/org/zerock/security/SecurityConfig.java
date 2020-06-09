@@ -20,11 +20,14 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    DataSource dataSource;
+    final DataSource dataSource;
 
-    @Autowired
-    ZerockUsersService zerockUsersService;
+    final ZerockUsersService zerockUsersService;
+
+    public SecurityConfig(DataSource dataSource, ZerockUsersService zerockUsersService) {
+        this.dataSource = dataSource;
+        this.zerockUsersService = zerockUsersService;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

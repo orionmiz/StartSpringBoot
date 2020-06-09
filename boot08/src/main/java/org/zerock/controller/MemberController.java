@@ -1,7 +1,6 @@
 package org.zerock.controller;
 
 import lombok.extern.java.Log;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.zerock.domain.Member;
 import org.zerock.persistence.MemberRepository;
 
+import javax.transaction.Transactional;
+
 @Controller
 @Log
-@RequestMapping("member")
+@RequestMapping("/member")
 public class MemberController {
 
     final PasswordEncoder encoder;
@@ -30,11 +31,21 @@ public class MemberController {
 
     }
 
+
+    @Transactional
     @PostMapping("/join")
     public String joinPost(@ModelAttribute("member") Member member) {
         log.info("Member: " + member);
 
-        return "";
+        String encrypted = encoder.encode(member.getUpw());
+
+        log.info("en: " + encrypted);
+
+        member.setUpw(encrypted);
+
+        repo.save(member);
+
+        return "/member/joinResult";
     }
 
 }
