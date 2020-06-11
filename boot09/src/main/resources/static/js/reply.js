@@ -14,6 +14,9 @@ var replyManager = (function () {
       url: "/replies/" + obj.bno,
       data: JSON.stringify(obj),
       dataType: "json",
+      beforeSend : function(xhr) {
+        xhr.setRequestHeader(obj.csrf.headerName, obj.csrf.token);
+      },
       contentType: "application/json",
       success: callback
     });
@@ -27,6 +30,9 @@ var replyManager = (function () {
       url: "/replies/" + obj.bno,
       data: JSON.stringify(obj),
       dataType: "json",
+      beforeSend : function(xhr) {
+        xhr.setRequestHeader(obj.csrf.headerName, obj.csrf.token);
+      },
       contentType: "application/json",
       success: callback
     });
@@ -41,6 +47,9 @@ var replyManager = (function () {
       url: "/replies/" + obj.bno + "/" + obj.rno,
       data: JSON.stringify(obj),
       dataType: "json",
+      beforeSend : function(xhr) {
+        xhr.setRequestHeader(obj.csrf.headerName, obj.csrf.token);
+      },
       contentType: "application/json",
       success: callback
     });

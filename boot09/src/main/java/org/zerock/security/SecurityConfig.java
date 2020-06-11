@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.zerock.filter.SessionCreatorFilter;
 
 import javax.sql.DataSource;
 
@@ -42,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/boards/list").permitAll()
             .antMatchers("/boards/register").hasAnyRole("BASIC", "MANAGER", "ADMIN");
 
-        http.formLogin().loginPage("/login");
+        http.formLogin().loginPage("/login").successHandler(new LoginSuccessHandler());
 
         http.exceptionHandling().accessDeniedPage("/accessDenied");
 
@@ -56,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .userDetailsService(zerockUsersService)
             .tokenRepository(getJDBCRepository())
             .tokenValiditySeconds(60 * 60 * 24); // 24 Hours
+
     }
 
     private PersistentTokenRepository getJDBCRepository() {
