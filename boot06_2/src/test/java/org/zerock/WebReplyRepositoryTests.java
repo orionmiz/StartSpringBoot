@@ -33,8 +33,8 @@ public class WebReplyRepositoryTests {
             board.setBno(num);
             IntStream.range(0, 10).forEach(i -> {
                 WebReply reply = new WebReply();
-                reply.setReplyText("메듀킬 죽어" + i);
-                reply.setReplyer("성재Re" + i);
+                reply.setReplyText("댓글내용" + i);
+                reply.setReplyer("댓글작성자" + i);
                 reply.setBoard(board);
                 repo.save(reply);
             });
